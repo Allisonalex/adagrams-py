@@ -20,7 +20,20 @@ def draw_letters():
     return hand
 
 def uses_available_letters(word, letter_bank):
-    pass
+    """Checks if the word can be formed using letters from the letter_bank."""
+    word = word.upper()  # Convert to uppercase for case insensitivity
+    letter_count = {}
+
+    # Count occurrences of each letter in the letter_bank
+    for letter in letter_bank:
+        letter_count[letter] = letter_count.get(letter, 0) + 1
+        # Check if the word can be formed with available letters
+    for letter in word:
+        if letter not in letter_count or letter_count[letter] == 0:
+            return False  # Letter is missing or used too many times
+        letter_count[letter] -= 1  # Use up one instance of the letter
+
+    return True
 
 def score_word(word):
     pass
