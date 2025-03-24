@@ -59,4 +59,37 @@ def score_word(word):
     return score
 
 def get_highest_word_score(word_list):
-    pass
+    """Returns the word with the highest score, applying tie-breaking rules."""
+    
+    # Initialize variables to track the best word and its score
+    best_word = ""
+    best_score = 0
+    best_length = float('inf')  # Start with a very large number
+    best_is_ten = False  # Whether the best word has 10 letters
+    # Iterate through each word in the word list
+    for word in word_list:
+        # Get the score for the current word
+        current_score = score_word(word)
+        current_length = len(word)
+        current_is_ten = current_length == 10
+    # Apply tie-breaking rules
+        if current_score > best_score:
+            # New highest score, update the best word and score
+            best_word = word
+            best_score = current_score
+            best_length = current_length
+            best_is_ten = current_is_ten
+        elif current_score == best_score:
+            if current_is_ten and not best_is_ten:
+                # Prefer the word with 10 letters
+                best_word = word
+                best_score = current_score
+                best_length = current_length
+                best_is_ten = True
+            elif current_length < best_length:
+                # Prefer the word with fewer letters
+                best_word = word
+                best_score = current_score
+                best_length = current_length
+                best_is_ten = current_is_ten
+    return (best_word, best_score)
